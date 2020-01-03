@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - ClienteRecibosAxos</title>
+    <link href="~/Scripts/Vendor/bootstrap-4.4.1-dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/Login/Login.css" rel="stylesheet" />
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">
+            <img src="~/Content/Images/surface1.svg" width="30" height="30" alt="" />
+        </a>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+                
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Opciones
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        @if (User.IsInRole("Root"))
+                        {
+                            <a class="dropdown-item" href="/Recibo/RecibosGlobales">Recibos Totales</a>
+                        }
+                        <a class="dropdown-item" href="/Recibo/MisRecibos">Mis recibos</a>
+                        <a class="dropdown-item" href="/Recibo/RegistrarRecibo">Agregar Recibo</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container body-content">
+        @RenderBody()
+    </div>
+    <script src="~/Scripts/Vendor/Jquery/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/Vendor/bootstrap-4.4.1-dist/js/bootstrap.bundle.min.js"></script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

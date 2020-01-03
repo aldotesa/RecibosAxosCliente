@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="~/Scripts/Vendor/bootstrap-4.4.1-dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/Login/Login.css" rel="stylesheet" />
+    <link href="~/Scripts/Vendor/devextreme/Lib/css/dx.common.css" rel="stylesheet" />
+    <link href="~/Scripts/Vendor/devextreme/Lib/css/dx.light.css" rel="stylesheet" />
+    <link href="~/Scripts/Vendor/fontawesome-free-5.12.0-web/css/all.css" rel="stylesheet" />
+    <link href="~/Scripts/Vendor/toastr/toastr.min.css" rel="stylesheet" />
+    <title>@ViewBag.Title - ClienteAxosApiClient</title>
+</head>
+<body>
+    <div class="container-fluid">
+        <div id="divContenidoLayout" class="row imagen">
+            <div class="col-12 col-md-6 col-xl-4">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+    <script src="~/Scripts/Vendor/Jquery/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/Vendor/bootstrap-4.4.1-dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Scripts/Vendor/devextreme/Lib/js/dx.all.js"></script>
+    <script src="~/Scripts/Vendor/fontawesome-free-5.12.0-web/js/all.js"></script>
+    <script src="~/Scripts/Vendor/toastr/toastr.min.js"></script>
+    <script src="~/Scripts/default.js"></script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>
