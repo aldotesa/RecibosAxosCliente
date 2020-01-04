@@ -18,7 +18,6 @@
     enviarPeticion() {
         if (!DevExpress.validationEngine.validateGroup('validarRecibo').isValid)
             return;
-        console.log(this.json());
         var data = this.json();
         $.ajax({
             url: AxosApiClient.UrlApi() + 'api/Recibo/RegistrarRecibo',
@@ -26,10 +25,6 @@
             type: 'post',
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
-            beforeSend: function (e) {
-                console.log(e);
-            },
-            //data:'{"Monto":123123,"Moneda":"USD","Fecha":"2020-01-03T17:20:16-06:00","Comentario":"","idProvedor":"2414197c-bc2d-ea11-bf49-c0b6f9424aef"}',
             complete: function (jqXHR, textStatus) {
                 if (textStatus === 'success' && jqXHR.responseJSON) {
                     toastr.success(jqXHR.responseJSON.Mensaje, 'Bienvenido');

@@ -120,6 +120,7 @@ $(document).ready(function (e) {
     });
     $('#txtComentario').dxTextArea({
         hint: "Escriba un comentario",
+        valueChangeEvent: 'keyup change blur focusout',
         text: $('#hfComentario').val()
     });
     $('#btnEditar').dxButton({

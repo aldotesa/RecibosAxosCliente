@@ -4,13 +4,8 @@
         dataSource: DevExpress.data.AspNet.createStore({
             loadUrl: AxosApiClient.UrlApi() + "api/Recibo/GetRecibosGlobal"
         }),
-        "export": {
-            enabled: true,
-            fileName: "RecibosExportados",
-            allowExportSelectedData: false
-        },
         searchPanel: {
-            visible: false,
+            visible: true,
             width: 250
         },
         filterRow: {
@@ -56,7 +51,6 @@
                     widget: "dxButton",
                     showText: 'inMenu',
                     options: {
-                        stylingMode: 'text',
                         hint: 'Agregar',
                         text: 'Agregar',
                         type: 'normal',
@@ -208,7 +202,7 @@ function eliminarRecibo(id) {
         dataType: 'json',
         complete: function (jqXHR, textStatus) {
             if (jqXHR.status === 204) {
-                $('#gridMisRecibos').dxDataGrid('instance').refresh();
+                $('#gridRecibos').dxDataGrid('instance').refresh();
                 toastr.success('Eliminado Correctamente', 'Éxito', {
                     "closeButton": true
                 });

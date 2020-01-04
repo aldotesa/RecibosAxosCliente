@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace RecibosAxosCliente.Controllers
 {
+    [Authorize]
     public class ReciboController : Controller
     {
         // GET: Recibo
@@ -35,7 +36,11 @@ namespace RecibosAxosCliente.Controllers
                 }
                 catch (ApiException<AxosResponse> ex)
                 {
-                    return RedirectToAction("","Home");
+                    return RedirectToAction("","Recibo");
+                }
+                catch(Exception ex)
+                {
+                    return RedirectToAction("", "Recibo");
                 }
                 
             }

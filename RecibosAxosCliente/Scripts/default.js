@@ -19,8 +19,7 @@ $(document).ajaxError(function (event, jqXHR, ajaxSettings, thrownError) {
 });
 $.ajaxSetup({
     headers: {
-        'Authorization': AxosApiClient.Token(),
-        'ContentType': 'application/ json; charset=utf-8;'
+        'Authorization': AxosApiClient.Token()
     }
 });
 

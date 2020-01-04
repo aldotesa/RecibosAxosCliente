@@ -4,13 +4,8 @@
         dataSource: DevExpress.data.AspNet.createStore({
             loadUrl: AxosApiClient.UrlApi() + "/api/Recibo/GetRecibosByUserGrid"
         }),
-        "export": {
-            enabled: true,
-            fileName: "RecibosExportados",
-            allowExportSelectedData: false
-        },
         searchPanel: {
-            visible: false,
+            visible: true,
             width: 250
         },
         filterRow: {
@@ -56,7 +51,6 @@
                     widget: "dxButton",
                     showText: 'inMenu',
                     options: {
-                        stylingMode: 'text',
                         hint: 'Agregar',
                         text: 'Agregar',
                         type: 'normal',
