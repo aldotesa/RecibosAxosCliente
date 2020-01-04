@@ -10,7 +10,7 @@
 #pragma warning disable 1573 // Disable "CS1573 Parameter '...' has no matching param tag in the XML comment for ...
 #pragma warning disable 1591 // Disable "CS1591 Missing XML comment for publicly visible type or member ..."
 
-namespace AxosApliClient
+namespace AxosApiClient
 {
     using System = global::System;
     
@@ -99,6 +99,12 @@ namespace AxosApliClient
                         {
                             var objectResponse_ = await ReadObjectResponseAsync<AxosResponse>(response_, headers_).ConfigureAwait(false);
                             return objectResponse_.Object;
+                        }
+                        else
+                        if (status_ == "400") 
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<AxosResponse>(response_, headers_).ConfigureAwait(false);
+                            throw new ApiException<AxosResponse>("BadRequest", (int)response_.StatusCode, objectResponse_.Text, headers_, objectResponse_.Object, null);
                         }
                         else
                         if (status_ != "200" && status_ != "204")
@@ -651,6 +657,230 @@ namespace AxosApliClient
             }
         }
     
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public System.Threading.Tasks.Task<AxosResponseOfRecibo> GetReciboAsync(int idRecibo)
+        {
+            return GetReciboAsync(idRecibo, System.Threading.CancellationToken.None);
+        }
+    
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public async System.Threading.Tasks.Task<AxosResponseOfRecibo> GetReciboAsync(int idRecibo, System.Threading.CancellationToken cancellationToken)
+        {
+            if (idRecibo == null)
+                throw new System.ArgumentNullException("idRecibo");
+    
+            var urlBuilder_ = new System.Text.StringBuilder();
+            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Recibo/GetRecibo?");
+            urlBuilder_.Append(System.Uri.EscapeDataString("idRecibo") + "=").Append(System.Uri.EscapeDataString(ConvertToString(idRecibo, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            urlBuilder_.Length--;
+    
+            var client_ = _httpClient;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+    
+                    PrepareRequest(client_, request_, urlBuilder_);
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+                    PrepareRequest(client_, request_, url_);
+    
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    try
+                    {
+                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+    
+                        ProcessResponse(client_, response_);
+    
+                        var status_ = ((int)response_.StatusCode).ToString();
+                        if (status_ == "200") 
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<AxosResponseOfRecibo>(response_, headers_).ConfigureAwait(false);
+                            return objectResponse_.Object;
+                        }
+                        else
+                        if (status_ == "400") 
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<AxosResponse>(response_, headers_).ConfigureAwait(false);
+                            throw new ApiException<AxosResponse>("BadRequest", (int)response_.StatusCode, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        if (status_ == "404") 
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<AxosResponse>(response_, headers_).ConfigureAwait(false);
+                            throw new ApiException<AxosResponse>("NotFound", (int)response_.StatusCode, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        if (status_ != "200" && status_ != "204")
+                        {
+                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false); 
+                            throw new ApiException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", (int)response_.StatusCode, responseData_, headers_, null);
+                        }
+            
+                        return default(AxosResponseOfRecibo);
+                    }
+                    finally
+                    {
+                        if (response_ != null)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+            }
+        }
+    
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public System.Threading.Tasks.Task<object> GetRecibosByUserGridAsync(bool? loadOptions_requireTotalCount, bool? loadOptions_requireGroupCount, bool? loadOptions_isCountQuery, int? loadOptions_skip, int? loadOptions_take, System.Collections.Generic.IEnumerable<object> loadOptions_sort, System.Collections.Generic.IEnumerable<object> loadOptions_group, System.Collections.Generic.IEnumerable<object> loadOptions_filter, System.Collections.Generic.IEnumerable<object> loadOptions_totalSummary, System.Collections.Generic.IEnumerable<object> loadOptions_groupSummary, System.Collections.Generic.IEnumerable<string> loadOptions_select, System.Collections.Generic.IEnumerable<string> loadOptions_preSelect, bool? loadOptions_remoteSelect, bool? loadOptions_remoteGrouping, System.Collections.Generic.IEnumerable<string> loadOptions_primaryKey, string loadOptions_defaultSort, bool? loadOptions_stringToLower, bool? loadOptions_paginateViaPrimaryKey)
+        {
+            return GetRecibosByUserGridAsync(loadOptions_requireTotalCount, loadOptions_requireGroupCount, loadOptions_isCountQuery, loadOptions_skip, loadOptions_take, loadOptions_sort, loadOptions_group, loadOptions_filter, loadOptions_totalSummary, loadOptions_groupSummary, loadOptions_select, loadOptions_preSelect, loadOptions_remoteSelect, loadOptions_remoteGrouping, loadOptions_primaryKey, loadOptions_defaultSort, loadOptions_stringToLower, loadOptions_paginateViaPrimaryKey, System.Threading.CancellationToken.None);
+        }
+    
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public async System.Threading.Tasks.Task<object> GetRecibosByUserGridAsync(bool? loadOptions_requireTotalCount, bool? loadOptions_requireGroupCount, bool? loadOptions_isCountQuery, int? loadOptions_skip, int? loadOptions_take, System.Collections.Generic.IEnumerable<object> loadOptions_sort, System.Collections.Generic.IEnumerable<object> loadOptions_group, System.Collections.Generic.IEnumerable<object> loadOptions_filter, System.Collections.Generic.IEnumerable<object> loadOptions_totalSummary, System.Collections.Generic.IEnumerable<object> loadOptions_groupSummary, System.Collections.Generic.IEnumerable<string> loadOptions_select, System.Collections.Generic.IEnumerable<string> loadOptions_preSelect, bool? loadOptions_remoteSelect, bool? loadOptions_remoteGrouping, System.Collections.Generic.IEnumerable<string> loadOptions_primaryKey, string loadOptions_defaultSort, bool? loadOptions_stringToLower, bool? loadOptions_paginateViaPrimaryKey, System.Threading.CancellationToken cancellationToken)
+        {
+            var urlBuilder_ = new System.Text.StringBuilder();
+            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Recibo/GetRecibosByUserGrid?");
+            if (loadOptions_requireTotalCount != null) 
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("loadOptions.requireTotalCount") + "=").Append(System.Uri.EscapeDataString(ConvertToString(loadOptions_requireTotalCount, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (loadOptions_requireGroupCount != null) 
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("loadOptions.requireGroupCount") + "=").Append(System.Uri.EscapeDataString(ConvertToString(loadOptions_requireGroupCount, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (loadOptions_isCountQuery != null) 
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("loadOptions.isCountQuery") + "=").Append(System.Uri.EscapeDataString(ConvertToString(loadOptions_isCountQuery, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (loadOptions_skip != null) 
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("loadOptions.skip") + "=").Append(System.Uri.EscapeDataString(ConvertToString(loadOptions_skip, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (loadOptions_take != null) 
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("loadOptions.take") + "=").Append(System.Uri.EscapeDataString(ConvertToString(loadOptions_take, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (loadOptions_sort != null) 
+            {
+                foreach (var item_ in loadOptions_sort) { urlBuilder_.Append(System.Uri.EscapeDataString("loadOptions.sort") + "=").Append(System.Uri.EscapeDataString(ConvertToString(item_, System.Globalization.CultureInfo.InvariantCulture))).Append("&"); }
+            }
+            if (loadOptions_group != null) 
+            {
+                foreach (var item_ in loadOptions_group) { urlBuilder_.Append(System.Uri.EscapeDataString("loadOptions.group") + "=").Append(System.Uri.EscapeDataString(ConvertToString(item_, System.Globalization.CultureInfo.InvariantCulture))).Append("&"); }
+            }
+            if (loadOptions_filter != null) 
+            {
+                foreach (var item_ in loadOptions_filter) { urlBuilder_.Append(System.Uri.EscapeDataString("loadOptions.filter") + "=").Append(System.Uri.EscapeDataString(ConvertToString(item_, System.Globalization.CultureInfo.InvariantCulture))).Append("&"); }
+            }
+            if (loadOptions_totalSummary != null) 
+            {
+                foreach (var item_ in loadOptions_totalSummary) { urlBuilder_.Append(System.Uri.EscapeDataString("loadOptions.totalSummary") + "=").Append(System.Uri.EscapeDataString(ConvertToString(item_, System.Globalization.CultureInfo.InvariantCulture))).Append("&"); }
+            }
+            if (loadOptions_groupSummary != null) 
+            {
+                foreach (var item_ in loadOptions_groupSummary) { urlBuilder_.Append(System.Uri.EscapeDataString("loadOptions.groupSummary") + "=").Append(System.Uri.EscapeDataString(ConvertToString(item_, System.Globalization.CultureInfo.InvariantCulture))).Append("&"); }
+            }
+            if (loadOptions_select != null) 
+            {
+                foreach (var item_ in loadOptions_select) { urlBuilder_.Append(System.Uri.EscapeDataString("loadOptions.select") + "=").Append(System.Uri.EscapeDataString(ConvertToString(item_, System.Globalization.CultureInfo.InvariantCulture))).Append("&"); }
+            }
+            if (loadOptions_preSelect != null) 
+            {
+                foreach (var item_ in loadOptions_preSelect) { urlBuilder_.Append(System.Uri.EscapeDataString("loadOptions.preSelect") + "=").Append(System.Uri.EscapeDataString(ConvertToString(item_, System.Globalization.CultureInfo.InvariantCulture))).Append("&"); }
+            }
+            if (loadOptions_remoteSelect != null) 
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("loadOptions.remoteSelect") + "=").Append(System.Uri.EscapeDataString(ConvertToString(loadOptions_remoteSelect, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (loadOptions_remoteGrouping != null) 
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("loadOptions.remoteGrouping") + "=").Append(System.Uri.EscapeDataString(ConvertToString(loadOptions_remoteGrouping, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (loadOptions_primaryKey != null) 
+            {
+                foreach (var item_ in loadOptions_primaryKey) { urlBuilder_.Append(System.Uri.EscapeDataString("loadOptions.primaryKey") + "=").Append(System.Uri.EscapeDataString(ConvertToString(item_, System.Globalization.CultureInfo.InvariantCulture))).Append("&"); }
+            }
+            if (loadOptions_defaultSort != null) 
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("loadOptions.defaultSort") + "=").Append(System.Uri.EscapeDataString(ConvertToString(loadOptions_defaultSort, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (loadOptions_stringToLower != null) 
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("loadOptions.stringToLower") + "=").Append(System.Uri.EscapeDataString(ConvertToString(loadOptions_stringToLower, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (loadOptions_paginateViaPrimaryKey != null) 
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("loadOptions.paginateViaPrimaryKey") + "=").Append(System.Uri.EscapeDataString(ConvertToString(loadOptions_paginateViaPrimaryKey, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            urlBuilder_.Length--;
+    
+            var client_ = _httpClient;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+    
+                    PrepareRequest(client_, request_, urlBuilder_);
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+                    PrepareRequest(client_, request_, url_);
+    
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    try
+                    {
+                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+    
+                        ProcessResponse(client_, response_);
+    
+                        var status_ = ((int)response_.StatusCode).ToString();
+                        if (status_ == "200") 
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<object>(response_, headers_).ConfigureAwait(false);
+                            return objectResponse_.Object;
+                        }
+                        else
+                        if (status_ != "200" && status_ != "204")
+                        {
+                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false); 
+                            throw new ApiException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", (int)response_.StatusCode, responseData_, headers_, null);
+                        }
+            
+                        return default(object);
+                    }
+                    finally
+                    {
+                        if (response_ != null)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+            }
+        }
+    
         protected struct ObjectResponseResult<T>
         {
             public ObjectResponseResult(T responseObject, string responseText)
@@ -752,8 +982,8 @@ namespace AxosApliClient
         public string Email { get; set; }
     
         [Newtonsoft.Json.JsonProperty("Password", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
-        [System.ComponentModel.DataAnnotations.StringLength(100, MinimumLength = 6)]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        [System.ComponentModel.DataAnnotations.StringLength(100)]
         public string Password { get; set; }
     
         [Newtonsoft.Json.JsonProperty("ConfirmPassword", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
@@ -867,6 +1097,267 @@ namespace AxosApliClient
     
         [Newtonsoft.Json.JsonProperty("IdRecibo", Required = Newtonsoft.Json.Required.Always)]
         public int IdRecibo { get; set; }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.2.0 (Newtonsoft.Json v11.0.0.0)")]
+    public partial class AxosResponseOfRecibo 
+    {
+        [Newtonsoft.Json.JsonProperty("ObjectResponse", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public Recibo ObjectResponse { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("Mensaje", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Mensaje { get; set; }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.2.0 (Newtonsoft.Json v11.0.0.0)")]
+    public partial class Recibo 
+    {
+        [Newtonsoft.Json.JsonProperty("IdRecibo", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int? IdRecibo { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("Monto", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public double? Monto { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("Moneda", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Moneda { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("Fecha", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.DateTimeOffset? Fecha { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("Comentario", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Comentario { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("Provedor", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public Provedor Provedor { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("IdProvedor", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Guid? IdProvedor { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("Usuario", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public ApplicationUser Usuario { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("IdUsuario", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string IdUsuario { get; set; }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.2.0 (Newtonsoft.Json v11.0.0.0)")]
+    public partial class Provedor 
+    {
+        [Newtonsoft.Json.JsonProperty("IdProvedor", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Guid? IdProvedor { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("Nombre", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Nombre { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("Recibos", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.ICollection<Recibo> Recibos { get; set; }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.2.0 (Newtonsoft.Json v11.0.0.0)")]
+    public partial class ApplicationUser 
+    {
+        [Newtonsoft.Json.JsonProperty("Recibos", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.ICollection<Recibo> Recibos { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("Email", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Email { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("EmailConfirmed", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool? EmailConfirmed { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("PasswordHash", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string PasswordHash { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("SecurityStamp", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string SecurityStamp { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("PhoneNumber", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string PhoneNumber { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("PhoneNumberConfirmed", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool? PhoneNumberConfirmed { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("TwoFactorEnabled", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool? TwoFactorEnabled { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("LockoutEndDateUtc", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.DateTimeOffset? LockoutEndDateUtc { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("LockoutEnabled", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool? LockoutEnabled { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("AccessFailedCount", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int? AccessFailedCount { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("Roles", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.ICollection<IdentityUserRole> Roles { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("Claims", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.ICollection<IdentityUserClaim> Claims { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("Logins", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.ICollection<IdentityUserLogin> Logins { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("Id", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Id { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("UserName", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string UserName { get; set; }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.2.0 (Newtonsoft.Json v11.0.0.0)")]
+    public partial class IdentityUserRole 
+    {
+        [Newtonsoft.Json.JsonProperty("UserId", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string UserId { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("RoleId", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string RoleId { get; set; }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.2.0 (Newtonsoft.Json v11.0.0.0)")]
+    public partial class IdentityUserClaim 
+    {
+        [Newtonsoft.Json.JsonProperty("Id", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int? Id { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("UserId", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string UserId { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("ClaimType", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string ClaimType { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("ClaimValue", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string ClaimValue { get; set; }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.2.0 (Newtonsoft.Json v11.0.0.0)")]
+    public partial class IdentityUserLogin 
+    {
+        [Newtonsoft.Json.JsonProperty("LoginProvider", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string LoginProvider { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("ProviderKey", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string ProviderKey { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("UserId", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string UserId { get; set; }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.2.0 (Newtonsoft.Json v11.0.0.0)")]
+    public partial class DataSourceLoadOptions 
+    {
+        [Newtonsoft.Json.JsonProperty("RequireTotalCount", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool? RequireTotalCount { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("RequireGroupCount", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool? RequireGroupCount { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("IsCountQuery", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool? IsCountQuery { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("Skip", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int? Skip { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("Take", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int? Take { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("Sort", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.ICollection<SortingInfo> Sort { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("Group", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.ICollection<GroupingInfo> Group { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("Filter", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.ICollection<object> Filter { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("TotalSummary", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.ICollection<SummaryInfo> TotalSummary { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("GroupSummary", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.ICollection<SummaryInfo> GroupSummary { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("Select", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.ICollection<string> Select { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("PreSelect", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.ICollection<string> PreSelect { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("RemoteSelect", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool? RemoteSelect { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("RemoteGrouping", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool? RemoteGrouping { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("PrimaryKey", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.ICollection<string> PrimaryKey { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("DefaultSort", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string DefaultSort { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("StringToLower", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool? StringToLower { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("PaginateViaPrimaryKey", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool? PaginateViaPrimaryKey { get; set; }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.2.0 (Newtonsoft.Json v11.0.0.0)")]
+    public partial class SortingInfo 
+    {
+        [Newtonsoft.Json.JsonProperty("Selector", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Selector { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("Desc", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool? Desc { get; set; }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.2.0 (Newtonsoft.Json v11.0.0.0)")]
+    public partial class GroupingInfo 
+    {
+        [Newtonsoft.Json.JsonProperty("GroupInterval", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string GroupInterval { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("IsExpanded", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool? IsExpanded { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("Selector", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Selector { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("Desc", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool? Desc { get; set; }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.2.0 (Newtonsoft.Json v11.0.0.0)")]
+    public partial class SummaryInfo 
+    {
+        [Newtonsoft.Json.JsonProperty("Selector", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Selector { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("SummaryType", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string SummaryType { get; set; }
     
     
     }

@@ -1,22 +1,19 @@
 ﻿@import url("https://fonts.googleapis.com/css?family=Lato&display=swap");
 
-.input-container {
-    position: relative !important;
-    padding: 0 !important;
-    margin: 0 !important;
+.informer {
+    height: 200px;
+    width: 150px;
+    text-align: center;
+    color: #000000;
 }
 
-.dev-icon {
-    margin: 0 !important;
+.count {
+    padding-top: 0px;
+    line-height: 27px;
+    margin: 0;
+    color: #000000;
 }
 
-.icon-component {
-    position: relative !important;
-    bottom: 30px !important;
-    left: 89% !important;
-    width: 18px !important;
-    height: 18px !important;
-}
 
 #formLogin {
     position: absolute;
@@ -86,3 +83,20 @@
     margin-top: 4rem;
 }
 
+.input-container {
+    position: relative !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.dev-icon {
+    margin: 0 !important;
+}
+
+.icon-component {
+    position: relative !important;
+    bottom: 30px !important;
+    left: 89% !important;
+    width: 18px !important;
+    height: 18px !important;
+}

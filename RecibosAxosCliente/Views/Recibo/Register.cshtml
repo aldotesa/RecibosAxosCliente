@@ -1,0 +1,56 @@
+﻿
+@{
+    ViewBag.Title = "Register";
+}
+
+<div class="card mt-4">
+    <div class="card-header">
+        <h3 class="card-title"><i class="fas fa-file"></i> Registra un Recibo</h3>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6 col-12">
+                <label>Monto:</label>
+                <div class="input-container">
+                    <div class="dev-icon" id="txtMonto"></div>
+                    <i class="fas fa-money-bill icon-component"></i>
+                </div>
+
+            </div>
+            <div class="col-md-6 col-12">
+                <label>Moneda:</label>
+                <div class="input-container">
+                    <div class="dev-icon" id="comboMoneda"></div>
+                    <i class="fas fa-dollar-sign icon-component"></i>
+                </div>
+            </div>
+            <div class="col-md-6 col-12">
+                <label>Fecha:</label>
+                <div class="input-container">
+                    <div class="dev-icon" id="dateFecha"></div>
+                    <i class="fas fa-clock icon-component"></i>
+                </div>
+
+            </div>
+            <div class="col-md-6 col-12">
+                <label>Provedor:</label>
+                <div class="input-container">
+                    <div class="dev-icon" id="comboProvedores"></div>
+                    <i class="fas fa-truck-moving icon-component"></i>
+                </div>
+            </div>
+            <div class="col-12">
+                <label>Comentario:</label>
+                <div id="txtComentario"></div>
+            </div>
+            <div class="col-12 text-right pt-4">
+                <div id="btnCancelar"></div>
+                <div id="btnRegistrar"></div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+
+    <script src="~/Scripts/Client/Recibo/Register.js"></script>
+}

@@ -18,15 +18,13 @@
             contentType: 'application/json; charset=utf-8;',
             dataType:'json',
             beforeSend: function (e) {
-                $('#txtUsuario').dxTextBox('instance').option('disabled', true);
+                $('#txtUsername').dxTextBox('instance').option('disabled', true);
                 $('#txtPassword').dxTextBox('instance').option('disabled', true);
                 $('#btnLogin').dxButton('instance').option('text', 'Iniciando Sesión...');
                 $('#btnLogin').dxButton('instance').option('icon', 'fas fa-cog fa-spin');
             },
             data: this.json(),
             complete: function (jqXHR, textStatus) {
-                console.log(jqXHR);
-                //$('#btnEntrar').html('<i class="fa fa-fw fa-sign-in-alt"></i>Iniciar Sesión');
                 if (textStatus === 'success' && jqXHR.responseJSON.access_token) {
                     localStorage.setItem('Token', jqXHR.responseJSON.access_token);
                     toastr.success('Inicio de sesión correcto, en un momento será redirigido.', 'Bienvenido');
@@ -36,8 +34,9 @@
                 } else {
                     $('#btnLogin').dxButton('instance').option('text', 'INICIAR SESIÓN');
                     $('#btnLogin').dxButton('instance').option('icon', 'fas fa-sign-in-alt fa-fw');
-                    $('#txtUsuario').dxTextBox('instance').option('disabled', false);
+                    $('#txtUsername').dxTextBox('instance').option('disabled', false);
                     $('#txtPassword').dxTextBox('instance').option('disabled', false);
+                    toastr.warning(jqXHR.responseJSON.Mensaje, 'Aviso');
                 }
             }
         });

@@ -1,21 +1,12 @@
 ﻿AxosApiClient = {
     Token: function () { return `Bearer ${localStorage.Token}`; },
-    UrlApi: function () { return $('#hfUrlApi').val(); },
-    LoadPanel: function (titulo) {
-        if (!titulo || titulo.trim() === '')
-            titulo = 'Cargando ...';
-        return $('#loadPanelGeneral').dxLoadPanel({
-            shadingColor: "rgba(0,0,0,0.4)",
-            position: { of: "#body" },
-            visible: false,
-            showIndicator: true,
-            showPane: true,
-            shading: true,
-            message: titulo,
-            closeOnOutsideClick: false
-        }).dxLoadPanel('instance');
-    }
+    UrlApi: function () { return $('#hfUrlApi').val(); }
 };
+
+$(document).ready(function (e) {
+
+    configuracionToastr();
+});
 $(document).ajaxError(function (event, jqXHR, ajaxSettings, thrownError) {
     console.log(jqXHR);
     if (jqXHR.status === 401) {
@@ -24,9 +15,14 @@ $(document).ajaxError(function (event, jqXHR, ajaxSettings, thrownError) {
     }
     console.log("Control errores default.js:", jqXHR);
 
-    toastr.warning(!jqXHR.responseJSON || jqXHR.responseJSON === '' || jqXHR.responseJSON === undefined ? 'Error no especificado, vea la consola de errores.' : jqXHR.responseJSON.ExceptionMessage, "Aviso", { timeOut: 5000 });
+    toastr.warning(!jqXHR.responseJSON || jqXHR.responseJSON === '' || jqXHR.responseJSON === undefined ? 'Error no especificado, vea la consola de errores.' : jqXHR.responseJSON.Mensaje, "Aviso", { timeOut: 5000 });
 });
-
+$.ajaxSetup({
+    headers: {
+        'Authorization': AxosApiClient.Token(),
+        'ContentType': 'application/ json; charset=utf-8;'
+    }
+});
 
 $('#btnCerrarSesion').click(function (e) {
     e.preventDefault();
@@ -53,3 +49,5 @@ function configuracionToastr() {
     toastr.options.timeOut = 1500;
 
 }
+
+

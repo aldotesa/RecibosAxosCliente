@@ -1,0 +1,63 @@
+﻿@model AxosApiClient.Recibo
+@{
+    ViewBag.Title = "Mis Recibos";
+}
+
+<input type="hidden" id="hfIdRecibo" value='@Model.IdRecibo'/>
+<input type="hidden" id="hfComentario" value='@Model.Comentario' />
+<input type="hidden" id="hfFecha" value='@Model.Fecha.Value.ToString("MM/dd/yyyy")' />
+<input type="hidden" id="hfMonto" value='@Model.Monto' />
+<input type="hidden" id="hfMoneda" value='@Model.Moneda' />
+<input type="hidden" id="hfProvedor" value='@Model.IdProvedor' />
+
+<div class="card mt-4">
+    <div class="card-header">
+        <h3 class="card-title"><i class="fas fa-file"></i> Editando el recibo @Model.IdRecibo </h3>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6 col-12">
+                <label>Monto:</label>
+                <div class="input-container">
+                    <div class="dev-icon" id="txtMonto"></div>
+                    <i class="fas fa-money-bill icon-component"></i>
+                </div>
+
+            </div>
+            <div class="col-md-6 col-12">
+                <label>Moneda:</label>
+                <div class="input-container">
+                    <div class="dev-icon" id="comboMoneda"></div>
+                    <i class="fas fa-dollar-sign icon-component"></i>
+                </div>
+            </div>
+            <div class="col-md-6 col-12">
+                <label>Fecha:</label>
+                <div class="input-container">
+                    <div class="dev-icon" id="dateFecha"></div>
+                    <i class="fas fa-clock icon-component"></i>
+                </div>
+
+            </div>
+            <div class="col-md-6 col-12">
+                <label>Provedor:</label>
+                <div class="input-container">
+                    <div class="dev-icon" id="comboProvedores"></div>
+                    <i class="fas fa-truck-moving icon-component"></i>
+                </div>
+            </div>
+            <div class="col-12">
+                <label>Comentario:</label>
+                <div id="txtComentario"></div>
+            </div>
+            <div class="col-12 text-right pt-4">
+                <div id="btnCancelar"></div>
+                <div id="btnEditar"></div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+
+    <script src="~/Scripts/Client/Recibo/Editar.js"></script>
+}

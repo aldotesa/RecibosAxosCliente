@@ -8,7 +8,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using AxosApliClient;
+using AxosApiClient;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -105,7 +105,7 @@ namespace RecibosAxosCliente.Controllers
                     return JsonConvert.SerializeObject(token);
                 }
             }
-            throw new Exception("El usuario no existe");
+            return JsonConvert.SerializeObject(new AxosResponse { Mensaje="El usuario no existe" });
         }
 
         //
@@ -188,7 +188,7 @@ namespace RecibosAxosCliente.Controllers
             }
 
 
-            var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+            var user = new Models.ApplicationUser { UserName = model.Email, Email = model.Email };
             var result = await UserManager.CreateAsync(user, model.Password);
             if (result.Succeeded)
             {
@@ -400,7 +400,7 @@ namespace RecibosAxosCliente.Controllers
                 {
                     return View("ExternalLoginFailure");
                 }
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new Models.ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
@@ -426,6 +426,13 @@ namespace RecibosAxosCliente.Controllers
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             return RedirectToAction("Index", "Home");
+        }
+
+        [HttpPost]
+        public string LogOffAjax()
+        {
+            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+            return Url.Action("Login", "Account");
         }
 
         //
